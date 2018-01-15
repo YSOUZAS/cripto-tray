@@ -5,25 +5,34 @@ const updateTime = () => {
 };
 
 
-const getCoin = (coin, name) => {
+const getCoin = (coin) => {
   const url = `https://min-api.cryptocompare.com/data/price?fsym=${coin}&tsyms=USD,BRL`;
   window.fetch(url).then((response) => {
     let data = response.json();
     data.then((value) => {
-      document.querySelector(`.js-${name}-name`).textContent = `${coin}`;
-      document.querySelector(`.js-${name}-usd`).textContent = `${value.USD}`;
-      document.querySelector(`.js-${name}-brl`).textContent = `${value.BRL.toString().replace('.', ',')}`;
+
+      let table = document.getElementById('tbody');
+
+      let row = table.insertRow(0);
+
+      let cellCoin = row.insertCell(0);
+      let cellUSD = row.insertCell(1);
+      let cellBRL = row.insertCell(2);
+
+      cellCoin.innerHTML = coin;
+      cellUSD.innerHTML = value.USD;
+      cellBRL.innerHTML = value.BRL.toString().replace('.', ',');
     });
   });
 };
 
 const getCoins = () => {
-  getCoin('BTC', 'bitcoin');
-  getCoin('ETH', 'ethereum');
-  getCoin('XRP', 'ripple');
-  getCoin('BCH', 'bitcoin-cash');
-  getCoin('ADA', 'cardano');
-  getCoin('LTC', 'litecoin');
+  getCoin('ADA');
+  getCoin('XRP');
+  getCoin('LTC');
+  getCoin('BCH');
+  getCoin('ETH');
+  getCoin('BTC');
 };
 
 
